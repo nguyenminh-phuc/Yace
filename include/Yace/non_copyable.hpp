@@ -8,6 +8,8 @@ namespace ye
     class YACE_API non_copyable
     {
     public:
+        non_copyable() = default;
+
         virtual ~non_copyable() = default;
 
         non_copyable(non_copyable const&) = delete;

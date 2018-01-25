@@ -10,9 +10,6 @@ elseif (UNIX)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_GLCOREARB -DGLFW_DLL)
-if (BUILD_SHARED_LIBS)
-   add_definitions(-D_YACE_BUILD_DLL)
-endif()
 
 include_directories("../../include")
 include_directories(${GLEW_INCLUDE_DIRS})
@@ -20,7 +17,12 @@ include_directories(${GLFW_INCLUDE_DIRS})
 
 file(GLOB YACE_SOURCES "../../include/Yace/*.hpp" "*.cpp")
 
-add_library(Yace ${YACE_SOURCES})
+if (BUILD_SHARED_LIBS)
+   add_definitions(-D_YACE_BUILD_DLL)
+   add_library(Yace SHARED ${YACE_SOURCES})
+else()
+   add_library(Yace STATIC ${YACE_SOURCES})
+endif()
 
 target_link_libraries(Yace ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_LIBRARIES})
 
